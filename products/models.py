@@ -40,6 +40,18 @@ def uploadImagePath(instance, fileName):
 
 # vid 3.8 9.42
 
+# For own product manger for custom query set, may useful in some cases
+class ProductManager(models.Manager):
+    # custom function for get products by id.
+    # there self.get_queryset() portion is taking Product.objects
+
+    def get_by_id(self, id):
+        qs = self.get_queryset().filter(id=id)
+        if qs.count() == 1:
+            return qs.first()
+        return None
+
+
 class Product(models.Model):
     title = models.CharField(max_length=120)
     description = models.TextField()
@@ -55,14 +67,6 @@ class Product(models.Model):
     def __unicode__(self):
         return self.title
 
-
+    objects = ProductManager()
 # after writing  model run (python manage.py makemigration) to create this model
 # then migrate
-
-# For own product manger for custom query set, may useful in some cases
-class ProductManager(models.Manager):
-    # custom function for get products by id.
-    # there self.get_queryset() portion is taking Product.objects
-
-    def getById(self, id):
-        return self.get_queryset().filter(id=id)

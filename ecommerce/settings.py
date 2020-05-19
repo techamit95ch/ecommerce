@@ -130,7 +130,7 @@ MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
 MEDIA_ROOT = os.path.join(BASE_DIR, "static_cdn", "media_root")
 
-print(BASE_DIR)
+# print(BASE_DIR)
 
 '''
     Set static and media files , media url, static urls and root folders
