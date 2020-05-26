@@ -47,14 +47,17 @@ def login_Page(request):
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
         user = authenticate(request, username=username, password=password)
+        user2 = authenticate(request, email=username, password=password)
+
         if user is not None:
             login(request, user)
             # print('USER LOGGED IN ')
             # Redirect to a success page.
             # context["form"] = LoginForm()
-            return redirect('/login')
+            return redirect('/admin')
         else:
             # Return an 'invalid login' error message.
+            # print(user2)
             print("Error")
 
         # context["form"] = LoginForm()

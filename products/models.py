@@ -40,11 +40,38 @@ def uploadImagePath(instance, fileName):
 
 # vid 3.8 9.42
 
+# Well this Model holds some special queryset . Basically its for playing with queryset conjunction
+
+class ProductQuerySet(models.query.QuerySet):
+    def active(self):
+        return self.filter(active=True)
+
+    def featured(self):
+        return self.filter(featured=True, active=True)
+
+
 # For own product manger for custom query set, may useful in some cases
 class ProductManager(models.Manager):
     # custom function for get products by id.
     # there self.get_queryset() portion is taking Product.objects
+    # Connecting queries with ProductQuerySet
+    def get_queryset(self):
+        return ProductQuerySet(self.model, using=self._db)
 
+    # For all active products
+    # For all active products
+    def all(self):
+        return self.get_queryset().active()
+
+    # To get Featured Query Set
+    def featured(self):
+        return self.get_queryset().featured()
+
+    def feature(self):
+        # Here it returns those products where featured = True
+        return self.get_queryset().filter(featured=True)
+
+    # To Get Product using Id only
     def get_by_id(self, id):
         qs = self.get_queryset().filter(id=id)
         if qs.count() == 1:
@@ -60,6 +87,10 @@ class Product(models.Model):
     # image = models.FileField(upload_to=uploadImagePath, null=True, blank=True)
     # For images only field models.ImageField is Required
     image = models.ImageField(upload_to=uploadImagePath, null=True, blank=True)
+    # For featured model purpose
+    featured = models.BooleanField(default=False)
+    # Some times we need products for availability or other purpose
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
