@@ -97,3 +97,33 @@ def productListView(request):
         'object_list': querySet
     }
     return render(request, "products/list.html", context)
+
+
+# For slug wise product view
+
+class ProductSlugDetailView(DetailView):
+    # queryset = Product.objects.all()
+    template_name = "products/detail.html"
+
+    #
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
+    #     return context
+
+    def get_object(self, *args, **kwargs):
+        # Using Custom Query
+        request = self.request
+        slug = self.kwargs.get('slug')
+        # print(slug)
+        try:
+            instance = Product.objects.get(slug=slug, active=True)
+            # print(instance)
+        except Product.DoesNotExist:
+            raise Http404("Not Found")
+        # To get first object only if multiple objects exists
+        except Product.MultipleObjectsReturned:
+            qs = Product.objects.filter(slug=slug, active=True)
+            instance = qs.first()
+        except:
+            raise Http404("Error many")
+        return instance

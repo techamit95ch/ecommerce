@@ -16,36 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
+from django.urls import path, include
 from .views import home_page, contact_page, login_Page, registerPage
-from products.views import (
-    productListView,
-    ProductListView,
-    ProductDetailView,
-    producDetailView,
-    ProductFeaturedListView,
-    ProductFeaturedDetailView
-)
+
 urlpatterns = [
     path('', home_page),
     path('contact/', contact_page),
     path('login/', login_Page),
     path('register/', registerPage),
-    path('product/', ProductListView.as_view()),
-    path('product-fv/', productListView),
-    path('product/<int:num>/', ProductDetailView.as_view()),  # Api for product details indevidually
-    # here slug pk must be the param name that model expecting to have
-    path('product-fv/<int:num>/', producDetailView),  # Api for product details individually, And its ideal way to
-    # to represent url
-
-    # Featured product path
-    path('featured/', ProductFeaturedListView.as_view()),
-
-    # Here ProductFeaturedDetailView expect this query name as pk object as a variable name or slug variable
-    path('featured/<int:pk>/', ProductFeaturedDetailView.as_view()),  # Api for product details individually
-
     path('admin/', admin.site.urls),
-
+    path('product/', include('products.urls')),
 ]
 
 if settings.DEBUG:

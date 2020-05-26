@@ -59,7 +59,6 @@ class ProductManager(models.Manager):
         return ProductQuerySet(self.model, using=self._db)
 
     # For all active products
-    # For all active products
     def all(self):
         return self.get_queryset().active()
 
@@ -91,6 +90,12 @@ class Product(models.Model):
     featured = models.BooleanField(default=False)
     # Some times we need products for availability or other purpose
     active = models.BooleanField(default=True)
+
+    # For User friendly pretty urls
+    slug = models.SlugField(blank=True, unique=True)
+
+    def get_absolute_url(self):
+        return "/product/{slug}/".format(slug=self.slug)
 
     def __str__(self):
         return self.title
