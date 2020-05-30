@@ -1,6 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- this block content exchange layout to parent -->
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for obj in object_list %}
+                <div class="col">
 
 
-{{ objectList }}
-{% for obj in object_list %}
-    <a href="{{ obj.get_absolute_url }}"> {{ obj.title }} </a></br>
-{% endfor %}
+                    {% include 'products/snippests/card.html' with instance=obj %}
+                </div>
+                <!--<a href="{{ obj.get_absolute_url }}"> {{ obj.title }} </a></br>-->
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
