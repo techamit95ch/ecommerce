@@ -10,8 +10,9 @@
     {% include 'base/css.html' %}
 </head>
 <body>
-<div class="container">
-    {% include 'base/navbar.html' %}
+{% include 'base/navbar.html' with brandName='Happy Shop!' %}
+<div class="container-fluid">
+
 
     <!-- this block content exchange layout with children -->
     {% block content %}

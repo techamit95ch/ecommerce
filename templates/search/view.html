@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- this block content exchange layout to parent -->
+{% block content %}
+    <div class="container">
+        <div class="row md-3">
+            {% if request.GET.q %}
+
+
+                <div class="col-12 ">
+                    <p>Your search result for "<strong>{{ request.GET.q }}</strong>"</p>
+                </div>
+            {% else %}
+                <div class="col-12 mx-auto py-5">
+                    {% include 'search/snippets/search-form.html' %}
+                </div>
+            {% endif %}
+
+
+            <hr>
+
+            {% for obj in object_list %}
+                <div class="col">
+
+
+                    {% include 'products/snippests/card.html' with instance=obj %}
+                </div>
+                {% if forloop.counter|divisibleby:"2" %}
+                    </div>
+                    <div class="clear bs-linebreak">
+                        <hr>
+                    </div>
+                    <div class="row">
+                {% endif %}
+                <!--<a href="{{ obj.get_absolute_url }}"> {{ obj.title }} </a></br>-->
+            {% endfor %}
+            </div>
+    </div>
+{% endblock %}

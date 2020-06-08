@@ -1,10 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
 
-</body>
-</html>
+{% url 'contact' as cntct %}
+{% url 'home' as home %}
+{% url 'login' as login %}
+{% url 'products:list' as product %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="{% url  'home' %}">
+        {% if brandName %}{{ brandName }} {% else %}{{ ' Happy Shopping' }}{% endif %}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% if request.path == home %}  active {% endif %} ">
+                <a class="nav-link" href="{% url  'home' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item {% if request.path == product %}  active {% endif %} ">
+                <a class="nav-link" href="{% url  'products:list' %}">Product</a>
+            </li>
+            <li class="nav-item {% if request.path == cntct %}  active {% endif %} ">
+                <a class="nav-link" href="{% url  'contact' %}">Contact</a>
+            </li>
+            {% if request.user.is_authenticated %}
+                <li class="nav-item {% if request.path == login %}  active {% endif %} ">
+                    <a class="nav-link" href="{% url  'login' %}">Log Out</a>
+                </li>
+            {% else %}
+
+                <li class="nav-item {% if request.path == login %}  active {% endif %} ">
+                    <a class="nav-link" href="{% url  'login' %}">Login</a>
+                </li>
+            {% endif %}
+            <!--
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+          -->
+        </ul>
+        {% include 'search/snippets/search-form.html' %}
+
+    </div>
+</nav>

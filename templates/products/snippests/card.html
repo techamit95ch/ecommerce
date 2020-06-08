@@ -6,7 +6,7 @@
     {% endif %}
     <div class="card-body">
         <h5 class="card-title">{{ instance.title }}</h5>
-        <p class="card-text">{{ instance.price }} Rs.</p>
+        <p class="card-text">{{ instance.description|linebreaks|truncatewords:14 }}</p>
     </div>
     <!--ul class="list-group list-group-flush">
       <li class="list-group-item">Cras justo odio</li>
@@ -14,7 +14,8 @@
       <li class="list-group-item">Vestibulum at eros</li>
     </ul-->
     <div class="card-body">
-        <a href="{{ instance.get_absolute_url }}" class="btn btn-primary">View</a>
+        <a href="{% url 'products:detail' slug=instance.slug %}" class="btn btn-primary">View</a>
+
         <!--<a href="#" class="card-link">Another link</a>
         -->
     </div>

@@ -10,8 +10,13 @@
 
                     {% include 'products/snippests/card.html' with instance=obj %}
                 </div>
+                {% if forloop.counter|divisibleby:"3" %}
+                    </div>
+                    <hr>
+                    <div class="row">
+                {% endif %}
                 <!--<a href="{{ obj.get_absolute_url }}"> {{ obj.title }} </a></br>-->
             {% endfor %}
-        </div>
+            </div>
     </div>
 {% endblock %}

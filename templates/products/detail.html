@@ -2,11 +2,20 @@
 {% load static %}
 <!-- this block content exchange layout to parent -->
 {% block content %}
+    <div class="container-fluid"></div>
+    <div class="row">
+        <div class="col">
+            <h1>{{ object.title }}</h1> <br>
+            <h3>{{ object.price }}</h3>
+            <h5>{{ object.timestamp |timesince }} ago</h5>
+
+            <p>{{ object.description|linebreaks }}<br></p>
+
+            {% if object.image %}
+                <img src="{{ object.image.url }}" class="img-fluid">
+            {% endif %}
+        </div>
+    </div>
 
 
-    {{ object.title }}<br>
-    {{ object.description }}<br>
-    {% if object.image %}
-        <img src="{{ object.image.url }}" class="img-fluid">
-    {% endif %}
 {% endblock %}
