@@ -6,5 +6,5 @@ def cart_home(request):
     request.session['cart_id']=13
     # to save username in session varriable
     request.session['username']= request.user.username
-    print(request.session.get('username'))
+    # print(request.session.get('username'))
     return render(request,'cart/home.html',{})
