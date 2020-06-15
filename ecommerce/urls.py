@@ -18,12 +18,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from .views import home_page, contact_page, login_Page, registerPage
+from cart.views import  cart_home
 
 urlpatterns = [
     path('', home_page, name='home'),  # here this name is important  during navingation, we dont have to type that url
     # we simply have to recall this given name
     path('contact/', contact_page, name='contact'),
     path('login/', login_Page, name="login"),
+    # Cart Component we will change later
+    path('cart/', cart_home, name="cart"),
+    
     path('register/', registerPage, name="register"),
     path('admin/', admin.site.urls),
     path('products/', include('products.urls', namespace="products")),
