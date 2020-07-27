@@ -26,17 +26,7 @@ class CartManager(models.Manager):
                 cart_obj.save() # saveing all details in cart object
         else:
             cart_obj = Cart.objects.new(user= request.user) # creating new object with according user who already logged in and has many product in the cart 
-            new_obj =True # yes it new object
-            request.session['cart_id'] = cart_obj.id # new sessionis created with new given id
-        print('\n-------- cart object from model is: ------------' )
-        print(cart_obj)
-        print('------------------\n')
-        return cart_obj, new_obj # returning two objects 
-
-    def new(self, user=None):
-        # print(user)
-        user_obj = None
-        if user is not None:
+            new_obj =True # yes it new objectConnection
             if user.is_authenticated:
                 user_obj = user
         return self.model.objects.create(user=user_obj)
@@ -46,6 +36,7 @@ class Cart(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, blank=True, null=True)
     total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+    sub_total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -55,20 +46,29 @@ class Cart(models.Model):
         return str(self.id)
 
 
-def pre_save_cart_reciever(sender, instance, action, *args, **kwargs):
-    print(action)
-    products = instance.products.all() # fetching all products from cart object in product model
-    # now we will work on total which we can see in the cart panel of the main admin  panel
-    print('--------------------Instance object is: ----------------------')
+def m2m_changed_cart_reciever(sender, instance, action, *args, **kwargs):
+    # print(action)
+    if action  in ['post_add','post_remove','post_clear']:
+        # print('fuck')
+        products = instance.products.all() # fetching all products from cart object in product model
+        # now we will work on total which we can see in the cart panel of the main admin  panel
+        # print('--------------------Instance object is: ----------------------')
 
-    #print(instance)
-    print('-----------------')
-    total = 0
-    for x in products:
-        total += x.price
-    print('\ntotal is:---',total)
-    instance.total=total
-    instance.save()
+        #print(instance)
+        # print('-----------------')
+        total = 0
+        for x in products:
+            total += x.price
+        # print('\ntotal is:---',total)
+        if instance.sub_total != total:
+            instance.sub_total=total
+            instance.save()
 # m2m_changed is a singnal used save while using many 2 many connection field setup
-m2m_changed.connect(pre_save_cart_reciever,sender=Cart.products.through)
-# cart series 9
+m2m_changed.connect(m2m_changed_cart_reciever,sender=Cart.products.through)
+
+def pre_save_cart_reciever(sender, instance, *args, **kwargs):
+    # print(action)
+    gst =10
+    instance.total= instance.sub_total + gst
+
+pre_save.connect(pre_save_cart_reciever,sender=Cart)
