@@ -26,11 +26,14 @@ urlpatterns = [
     path('contact/', contact_page, name='contact'),
     path('login/', login_Page, name="login"),
     # Cart Component we will change later
-    path('cart/', cart_home, name="cart"),
+    # path('cart/', cart_home, name="cart"),
     
     path('register/', registerPage, name="register"),
     path('admin/', admin.site.urls),
     path('products/', include('products.urls', namespace="products")),
+    
+    path('cart/', include('cart.urls', namespace="cart")),
+    
     path('search/', include('search.urls', namespace="search")),
 ]
 

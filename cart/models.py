@@ -10,26 +10,33 @@ User = settings.AUTH_USER_MODEL
 class CartManager(models.Manager):
     # def get_or_create():
     #     return obj,True
+    def new(self, user=None):
+        user_obj = None
+        if user is not  None:
+            if user.is_authenticated:
+                user_obj= user
+
+        return self.model.objects.create(user=user_obj)
+        
     def new_or_get(self,request):
         cart_id = request.session.get("cart_id", None) # getting session cart id
         qs = self.get_queryset().filter(id=cart_id) # getting all objects form the Cart
-        print('\n-------- qs.count() is: ')
-        print(qs.count())
-        print('------------------\n')
+        
         if qs.count() == 1: # here it means user just adding cart for the first time
             new_obj = False # as because not new cart object got
             cart_obj = qs.first() # fetching only first object
             # print(request.user.is_authenticated == True)
             if request.user.is_authenticated and cart_obj.user is None : #for the first time entry for that user
-                print('authenticated',cart_obj.user)
+                
                 cart_obj.user = request.user # adding that user in cart object
                 cart_obj.save() # saveing all details in cart object
         else:
             cart_obj = Cart.objects.new(user= request.user) # creating new object with according user who already logged in and has many product in the cart 
             new_obj =True # yes it new objectConnection
-            if user.is_authenticated:
-                user_obj = user
-        return self.model.objects.create(user=user_obj)
+            # if user.is_authenticated:
+            #     user_obj = user
+            request.session['cart_id']=cart_obj.id
+        return cart_obj,new_obj
 
 
 class Cart(models.Model):
@@ -44,22 +51,20 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.id)
+    
+    
 
 
 def m2m_changed_cart_reciever(sender, instance, action, *args, **kwargs):
-    # print(action)
+   
     if action  in ['post_add','post_remove','post_clear']:
-        # print('fuck')
+        
         products = instance.products.all() # fetching all products from cart object in product model
-        # now we will work on total which we can see in the cart panel of the main admin  panel
-        # print('--------------------Instance object is: ----------------------')
-
-        #print(instance)
-        # print('-----------------')
+        
         total = 0
         for x in products:
             total += x.price
-        # print('\ntotal is:---',total)
+        
         if instance.sub_total != total:
             instance.sub_total=total
             instance.save()
