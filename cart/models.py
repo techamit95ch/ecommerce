@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from products.models import Product
+from django.db.models.signals import pre_save, post_save,m2m_changed
 
 User = settings.AUTH_USER_MODEL
 
@@ -10,23 +11,30 @@ class CartManager(models.Manager):
     # def get_or_create():
     #     return obj,True
     def new_or_get(self,request):
-        cart_id = request.session.get("cart_id", None)
-        qs = self.get_queryset().filter(id=cart_id)
-        if qs.count() == 1:
-            new_obj = False
-            cart_obj = qs.first()
-            if request.user.is_authenticated and cart_obj.user is None :
-                cart_obj.user = request.user
-                cart_obj.save()
+        cart_id = request.session.get("cart_id", None) # getting session cart id
+        qs = self.get_queryset().filter(id=cart_id) # getting all objects form the Cart
+        print('\n-------- qs.count() is: ')
+        print(qs.count())
+        print('------------------\n')
+        if qs.count() == 1: # here it means user just adding cart for the first time
+            new_obj = False # as because not new cart object got
+            cart_obj = qs.first() # fetching only first object
+            # print(request.user.is_authenticated == True)
+            if request.user.is_authenticated and cart_obj.user is None : #for the first time entry for that user
+                print('authenticated',cart_obj.user)
+                cart_obj.user = request.user # adding that user in cart object
+                cart_obj.save() # saveing all details in cart object
         else:
-            cart_obj = Cart.objects.new(user= request.user)
-            new_obj =True
-            
-            request.session['cart_id'] = cart_obj.id
-        return cart_obj, new_obj
+            cart_obj = Cart.objects.new(user= request.user) # creating new object with according user who already logged in and has many product in the cart 
+            new_obj =True # yes it new object
+            request.session['cart_id'] = cart_obj.id # new sessionis created with new given id
+        print('\n-------- cart object from model is: ------------' )
+        print(cart_obj)
+        print('------------------\n')
+        return cart_obj, new_obj # returning two objects 
 
     def new(self, user=None):
-        print(user)
+        # print(user)
         user_obj = None
         if user is not None:
             if user.is_authenticated:
@@ -47,3 +55,20 @@ class Cart(models.Model):
         return str(self.id)
 
 
+def pre_save_cart_reciever(sender, instance, action, *args, **kwargs):
+    print(action)
+    products = instance.products.all() # fetching all products from cart object in product model
+    # now we will work on total which we can see in the cart panel of the main admin  panel
+    print('--------------------Instance object is: ----------------------')
+
+    #print(instance)
+    print('-----------------')
+    total = 0
+    for x in products:
+        total += x.price
+    print('\ntotal is:---',total)
+    instance.total=total
+    instance.save()
+# m2m_changed is a singnal used save while using many 2 many connection field setup
+m2m_changed.connect(pre_save_cart_reciever,sender=Cart.products.through)
+# cart series 9
