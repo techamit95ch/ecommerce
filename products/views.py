@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.views.generic import ListView, DetailView
 from .models import Product
-
+from cart.models import Cart
 
 # Create your views here.
 # Featured Product Views Here
@@ -44,6 +44,7 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
+
         # print(context)
         # context['abc']=123
         return context
@@ -106,9 +107,13 @@ class ProductSlugDetailView(DetailView):
     template_name = "products/detail.html"
 
     #
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
-    #     return context
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductSlugDetailView, self).get_context_data(*args, **kwargs)
+        request = self.request
+
+        cart_obj, new_obj = Cart.objects.new_or_get(request) # because we have two objects coming back
+        context['cart']= cart_obj
+        return context
 
     def get_object(self, *args, **kwargs):
         # Using Custom Query
