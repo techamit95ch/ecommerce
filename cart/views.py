@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 
 from .models import Cart,Product
+from orders.models import Order
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request) # because we have two objects coming back
     
@@ -21,3 +22,11 @@ def cart_update(request):
     return redirect('cart:home')
     # return redirect(product_obj. get_absolute_url())
     # 10
+def checkOut_home(request):
+    cart_obj,cart_created = Cart.objects.new_or_get(request)
+    order_obj = None
+    if not cart_created or cart_obj.products.count != 0:
+        order_obj, new_obj = Order.objects.get_or_create(cart=cart_obj)
+    else:
+        return redirect('cart:home')
+    return render(request,'cart/checkOut.html',{"order" : order_obj})

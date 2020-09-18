@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models.signals import pre_save ,post_save
 from cart.models import Cart
 from ecommerce.utils import unique_order_id_generator
-
+import math
 ORDER_STATUS_CHOICES= (
 	('created', 'Created'),
 	('paid', 'Paid'),
@@ -28,8 +28,8 @@ class Order (models.Model):
 
     def update_total(self):
         cart_total=self.cart.total
-        cart_shipping_total = self.cart.shipping_total
-        total = cart_total + shipping_total
+        cart_shipping_total = self.shipping_total
+        total = format( math.fsum([ cart_total , cart_shipping_total]),'.2f'); 
         self.total= total
         self.save()
         return total
@@ -55,4 +55,4 @@ post_save.connect(post_save_cart_total, sender=Cart)
 def post_save_order(sender, instance, created, *args, **kwargs):
     if created:
         instance.update_total()
-post_save.connect(post_save_order, sender=Cart)
+post_save.connect(post_save_order, sender=Order)

@@ -2,7 +2,8 @@ from django.urls import path
 from cart.views import (
     cart_home, 
     cart_update,
-    Cart
+    Cart,
+    checkOut_home
 )
 
 # If you are using namespace in main url in include then providing this app_name is necessary
@@ -11,6 +12,5 @@ urlpatterns = [
 
     path('', cart_home, name='home'),
     path('update', cart_update, name='update'),
-   
-    
+    path('checkout',checkOut_home, name='checkout'),
 ]

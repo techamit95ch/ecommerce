@@ -51,7 +51,8 @@
             </td>
 
             <td >
-                {{cart.total}}
+                
+                <a class="btn btn-block btn-success" href=" {% url 'cart:checkout'  %}">Checkout <small>({{cart.total}} /-)</small></a>
             </td>
         </tr>
       </tbody>
