@@ -2,7 +2,7 @@
 
 {% url 'contact' as cntct %}
 {% url 'home' as home %}
-{% url 'login' as login %}
+<!-- {% url 'login' as login %} -->
 {% url 'products:list' as product %}
 {% url 'cart:home' as cart_url %}
 
@@ -26,16 +26,7 @@
             <li class="nav-item {% if request.path == cntct %}  active {% endif %} ">
                 <a class="nav-link" href="{% url  'contact' %}">Contact</a>
             </li>
-            {% if request.user.is_authenticated %}
-                <li class="nav-item {% if request.path == login %}  active {% endif %} ">
-                    <a class="nav-link" href="{% url  'login' %}">Log Out</a>
-                </li>
-            {% else %}
 
-                <li class="nav-item {% if request.path == login %}  active {% endif %} ">
-                    <a class="nav-link" href="{% url  'login' %}">Login</a>
-                </li>
-            {% endif %}
             <li class="nav-item {% if request.path == cart_url %}  active {% endif %} ">
                 <a class="nav-link" href="{{ cart_url }}">Cart
                     {{ request.session.cart_items }}
