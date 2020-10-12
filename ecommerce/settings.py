@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'tags',
     'cart',
     'orders',
-    'accounts'
+    'accounts',
+    'billing'
     
 ]
 
