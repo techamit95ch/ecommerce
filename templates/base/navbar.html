@@ -1,8 +1,9 @@
 {% load static %}
 
-{% url 'contact' as cntct %}
+{% url 'contact' as contact %}
 {% url 'home' as home %}
-<!-- {% url 'login' as login %} -->
+{% url 'login' as login %}
+{% url 'logout' as logout %}
 {% url 'products:list' as product %}
 {% url 'cart:home' as cart_url %}
 
@@ -23,7 +24,7 @@
             <li class="nav-item {% if request.path == product %}  active {% endif %} ">
                 <a class="nav-link" href="{% url  'products:list' %}">Product</a>
             </li>
-            <li class="nav-item {% if request.path == cntct %}  active {% endif %} ">
+            <li class="nav-item {% if request.path == contact %}  active {% endif %} ">
                 <a class="nav-link" href="{% url  'contact' %}">Contact</a>
             </li>
 
@@ -32,6 +33,17 @@
                     {{ request.session.cart_items }}
                 </a>
             </li>
+        {% if request.user.is_authenticated %}
+                <li class="nav-item {% if request.path == login %}  active {% endif %} ">
+                    <a class="nav-link" href="{% url  'logout' %}">Log Out</a>
+                </li>
+            {% else %}
+
+
+                <li class="nav-item {% if request.path == login %}  active {% endif %} ">
+                    <a class="nav-link" href="{% url  'login' %}">Login</a>
+                </li>
+            {% endif %}
             <!--
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'search',
     'tags',
     'cart',
-    'orders'
+    'orders',
+    'accounts'
     
 ]
 
@@ -54,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+LOGOUT_REDIRECT_URL = '/login/'
 ROOT_URLCONF = 'ecommerce.urls'
 
 TEMPLATES = [

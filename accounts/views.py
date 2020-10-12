@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, get_user_model
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from ecommerce.forms import ContactForm, LoginForm, RegisterForm
+from django.utils.http import is_safe_url # For saf login
+
 
 
 # Create your views here.
@@ -11,10 +13,11 @@ def login_Page(request):
     # print(request.user.is_authenticated)
     context = {
         "form": form
-
     }
-
-
+    # To check For The next Url...
+    next_ = request.GET.get('next')
+    next_post = request.POST.get('next')
+    redirect_path = next_ or next_post
     if form.is_valid():
         # print(form.cleaned_data)
         username = form.cleaned_data.get('username')
@@ -24,6 +27,12 @@ def login_Page(request):
 
         if user is not None:
             login(request, user)
+            if is_safe_url(redirect_path, request.get_host()):
+                return redirect(redirect_path)
+            else:
+                return redirect('/')
+
+
             # print('USER LOGGED IN ')
             # Redirect to a success page.
             # context["form"] = LoginForm()
@@ -35,7 +44,7 @@ def login_Page(request):
 
         # context["form"] = LoginForm()
 
-    return render(request, 'auth/login.html', context)
+    return render(request, 'accounts/login.html', context)
 
 
 User = get_user_model()
@@ -55,4 +64,4 @@ def registerPage(request):
         password = form.cleaned_data.get('password')
         newUser = User.objects.create_user(username, email, password)
         print(newUser)
-    return render(request, 'auth/register.html', context)
+    return render(request, 'accounts/register.html', context)
