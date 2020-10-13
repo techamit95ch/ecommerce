@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, get_user_model
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from ecommerce.forms import ContactForm, LoginForm, RegisterForm
+from .forms import ContactForm, LoginForm, RegisterForm
 from django.utils.http import is_safe_url # For saf login
 
 
@@ -58,10 +58,10 @@ def registerPage(request):
     }
 
     if form.is_valid():
-        print(form.cleaned_data)
+        # print(form.cleaned_data)
         username = form.cleaned_data.get('username')
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
         newUser = User.objects.create_user(username, email, password)
-        print(newUser)
+        # print(newUser)
     return render(request, 'accounts/register.html', context)

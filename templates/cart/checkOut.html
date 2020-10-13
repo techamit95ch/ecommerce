@@ -1,8 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if not billing_profile %}
+<div class="row-tex-center">
+  <div class="col-12 col-md-6"><p class="lead"> <strong>Login</strong></p>
+  {% include 'accounts/snippets/form.html' with form=login_form next_uri=build_absolute_uri %}
+  </div>
+  <div class="col-12 col-md-6"><p class="lead"><small>or continue as</small> Guest</p></div>
 
-<h1>Checkout </h1>
-<p><strong>Cart total : </strong> <small>{{order.cart.total}}</small></p>
-<p><strong>Shipping total : </strong> <small>{{order.shipping_total}}</small></p>
-<p><strong>Order total : </strong> <small>{{order.total}}</small></p>
+</div>
+
+{% else %}
+  <h1>Checkout </h1>
+  <p><strong>Cart total : </strong> <small>{{order.cart.total}}</small></p>
+  <p><strong>Shipping total : </strong> <small>{{order.shipping_total}}</small></p>
+  <p><strong>Order total : </strong> <small>{{order.total}}</small></p>
+{% endif %}
   {% endblock content %}

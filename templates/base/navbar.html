@@ -3,6 +3,7 @@
 {% url 'contact' as contact %}
 {% url 'home' as home %}
 {% url 'login' as login %}
+{% url 'register' as register %}
 {% url 'logout' as logout %}
 {% url 'products:list' as product %}
 {% url 'cart:home' as cart_url %}
@@ -42,6 +43,9 @@
 
                 <li class="nav-item {% if request.path == login %}  active {% endif %} ">
                     <a class="nav-link" href="{% url  'login' %}">Login</a>
+                </li>
+            <li class="nav-item {% if request.path == register %}  active {% endif %} ">
+                    <a class="nav-link" href="{% url  'register' %}">Register</a>
                 </li>
             {% endif %}
             <!--

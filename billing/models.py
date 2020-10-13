@@ -8,7 +8,7 @@ User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class Billing(models.Model):
-    user = models.ForeignKey(User, unique=True, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     update = models.DateTimeField(auto_now=True)
     email = models.EmailField(null=True,blank=True)
