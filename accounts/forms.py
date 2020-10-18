@@ -7,6 +7,22 @@ User = get_user_model()
 
 # for contact forms
 
+class GuestForm(forms.Form):
+    email = forms.EmailField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'id': 'form_email',
+                'placeholder': 'Your Email'
+            }
+        )
+    )
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not '@gmail.com' in email:
+            raise forms.ValidationError('Email Should be Gmail')
+        return email
+        
 class ContactForm(forms.Form):
     fullName = forms.CharField(
         widget=forms.TextInput(
