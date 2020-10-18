@@ -12,7 +12,7 @@ def cart_home(request):
 
 
 def cart_update(request):
-    print(request.POST.get('product_id'))
+    # print(request.POST.get('product_id'))
     product_id = request.POST.get('product_id')
     if product_id is not None:
 
@@ -31,9 +31,7 @@ def cart_update(request):
 def checkoutHome(request):
     cart_obj, cart_created = Cart.objects.new_or_get(request)
     order_obj = None
-    if not cart_created or cart_obj.products.count != 0:
-        order_obj, new_obj = Order.objects.get_or_create(cart=cart_obj)
-    else:
+    if cart_created or cart_obj.products.count == 0:
         return redirect('cart:home')
 
     # for guest user
@@ -52,6 +50,28 @@ def checkoutHome(request):
         billing_profile, billing_guest_profile_created = Billing.objects.get_or_create(email=guest_email_obj.email)
     else:
         pass
+    # print('\nbilling_profile : ', billing_profile)
+
+    if billing_profile is not None:
+        order_obj,order_obj_created=Order.objects.new_or_get(billing_profile,cart_obj)
+        # Solved through Order Manager
+        # order_qs= Order.objects.filter(billing_profile=billing_profile, cart=cart_obj,active=True)
+        # # print('\nbilling_profile : ', billing_profile)
+        # # print('\norder_qs : ', order_qs)
+
+        # # if order_qs.exists():
+        # if order_qs.count()==1:
+        #     order_obj=order_qs.first()
+        # else:
+        #     # old_order_qs= Order.objects.exclude(billing_profile=billing_profile).filter(cart=cart_obj,active=True)
+        #     # if old_order_qs.exists():
+        #     #     old_order_qs.update(active=False)
+        #     order_obj = Order.objects.create(billing_profile=billing_profile,cart=cart_obj)
+        # # else:
+        # #     order_obj, new_obj = Order.objects.get_or_create(
+        # #             billing_profile=billing_profile,
+        # #             cart=cart_obj
+        # #         )
 
     context = {
         "order": order_obj,
@@ -59,5 +79,5 @@ def checkoutHome(request):
         "login_form":login_form,
         "guest_form":guest_form
     }
-    # print(context)
+    # print('\n context : ', context)
     return render(request, 'cart/checkOut.html', context)
