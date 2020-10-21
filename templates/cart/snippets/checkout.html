@@ -1,0 +1,13 @@
+
+<h1>Finalize Checkout </h1>
+
+<p><strong>Shipping Address : </strong> <small>{{order.shipping_address.get_address}}</small></p>
+<p><strong>Billing Address : </strong> <small>{{order.billing_address.get_address}}</small></p>
+<p><strong>Cart total : </strong> <small>{{order.cart.total}}</small></p>
+<p><strong>Cart total : </strong> <small>{{order.cart.total}}</small></p>
+<p><strong>Shipping total : </strong> <small>{{order.shipping_total}}</small></p>
+<p><strong>Order total : </strong> <small>{{order.total}}</small></p>
+<form method="POST" action="">
+    {%csrf_token%}
+<button type="submit" class="btn btn-success">Checkout</button>
+</form>

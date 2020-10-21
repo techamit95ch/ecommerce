@@ -17,12 +17,14 @@ class GuestForm(forms.Form):
             }
         )
     )
+
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if not '@gmail.com' in email:
             raise forms.ValidationError('Email Should be Gmail')
         return email
-        
+
+
 class ContactForm(forms.Form):
     fullName = forms.CharField(
         widget=forms.TextInput(

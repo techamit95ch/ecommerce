@@ -1,0 +1,15 @@
+{% load static %}
+<!-- this block content exchange layout to parent -->
+{% block content %}
+
+<form
+  method="POST"
+  action="{% if action_url %}{{action_url}}{% endif %}"
+>
+  {% csrf_token %} {% if next_uri %}
+  <input class="" type="hidden" name="next" value="{{next_uri}}" />
+  <input class="" type="hidden" name="address_type" value="{{address_type}}" />
+  {% endif %} {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}

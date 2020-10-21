@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-{{order.order_id}}-- {{ order.cart}}
 {% if not billing_profile %}
-<div class="row row-tex-center">
+<div class="row row-text-center text-center">
     <div class="col-md-12">
         <div class="row">
             <div class=" col-md-6">
@@ -18,9 +17,36 @@
     </div>
 </div>
 {% else %}
-<h1>Checkout </h1>
-<p><strong>Cart total : </strong> <small>{{order.cart.total}}</small></p>
-<p><strong>Shipping total : </strong> <small>{{order.shipping_total}}</small></p>
-<p><strong>Order total : </strong> <small>{{order.total}}</small></p>
+{% if not order.shipping_address %}
+<div class="row">
+    <div class="col-sm-12 ">
+        <p class="lead text-center">Shipping Address</p>
+    </div>
+<div class="col-md-6">
+{% url "checkout_address_create" as checkout_create %}
+
+{% include 'addresses/snippets/form.html' with form=address_form next_uri=request.build_absolute_uri action_url=checkout_create address_type='shipping'%}
+</div>
+{% url "checkout_address_use" as checkout_address_use %}
+{# <p>{{checkout_address_use}}</p> #}
+{% include 'addresses/snippets/prev_addresses.html' with address_qs=address_qs address_type='shipping' next_uri=request.build_absolute_uri action_url=checkout_address_use %}
+</div>
+
+{%elif not order.billing_address%}
+<div class="row">
+    {{order.order_id}}-- {{ order.cart}}
+    <div class="col-sm-12 "><p class="lead "><center>Billing Address</center>  </p></div>
+    <div class="col-sm-6 ">
+        {% url "checkout_address_create" as checkout_create %}
+        {% url "checkout_address_use" as checkout_use %}
+        {% include 'addresses/snippets/form.html' with form=address_form next_uri=request.build_absolute_uri action_url=checkout_create address_type='billing'  %}
+    </div>
+    {% include 'addresses/snippets/prev_addresses.html' with address_qs=address_qs address_type='billing' next_uri=request.build_absolute_uri action_url=checkout_use%}
+</div>
+{% else %}
+
+{% include 'cart/bootstrap/checkout.html' with order=order%}
+
+{%endif %}
 {% endif %}
 {% endblock content %}

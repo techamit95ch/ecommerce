@@ -1,0 +1,20 @@
+{% if address_qs.exists %}
+<div class="col-sm-6 ">
+    <form class="form my-2 my-lg-0" method="POST" action="{% if action_url %}{{action_url}}{% endif %}">
+        {%csrf_token%}
+        <div class="form-check">
+            {% if next_uri %}
+            <input class="" type="hidden" name="next" value="{{next_uri}}" />
+            <input class="" type="hidden" name="address_type" value="{{address_type}}" />
+            {% endif %} {{ form.as_p }}
+            {% for address in address_qs %}
+            <label class="form-check-label" for='address-{{address.id}}'>
+                <input class="form-check-input" id='address-{{address.id}}' type="radio" name="{{address_type}}_address" value="{{address.id}}">
+                {{address.addressLine1}} - {{address.addressLine2}}
+            </label><br>
+            {%endfor%}
+            <button type="submit" name="" class="btn btn-success"> Use Address</button>
+        </div>
+    </form>
+</div>
+{%endif%}
