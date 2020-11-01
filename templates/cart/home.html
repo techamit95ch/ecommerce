@@ -2,11 +2,11 @@
 {% block content %}
 
 {% if cart.products.exists %}
-    
 
-    
+
+
 <h1>Cart</h1>
-  <table class="table">
+  <table class="table cart-table">
       <thead>
           <tr>
               <td scope="row">#</td>
@@ -14,7 +14,7 @@
               <td>Price</td>
           </tr>
       </thead>
-      <tbody>
+      <tbody class="cart-body">
           {% for product in cart.products.all %}
           <tr>
             <td scope="row">
@@ -31,28 +31,28 @@
             </td>
         </tr>
           {% endfor %}
-            
+
           <tr>
-            
+
 
             <td colspan="2">
                 <b> Sub Total </b>
             </td>
 
-            <td >
+            <td class="cart_sub_total">
                 {{cart.sub_total}}
             </td>
         </tr>
         <tr>
-            
+
 
             <td colspan="2">
                 <b> Total </b>
             </td>
 
             <td >
-                
-                <a class="btn btn-block btn-success" href=" {% url 'cart:checkout'  %}">Checkout <small>({{cart.total}} /-)</small></a>
+
+                <a class="btn btn-block btn-success cart_total" href=" {% url 'cart:checkout'  %}">Checkout ({{cart.total}} /-)</a>
             </td>
         </tr>
       </tbody>

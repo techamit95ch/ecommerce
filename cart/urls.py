@@ -4,7 +4,8 @@ from cart.views import (
     cart_update,
     Cart,
     checkoutHome,
-    success
+    success,
+    cart_api_update
 )
 
 # If you are using namespace in main url in include then providing this app_name is necessary
@@ -15,4 +16,5 @@ urlpatterns = [
     path('update', cart_update, name='update'),
     path('checkout', checkoutHome, name='checkout'),
     path('success', success, name='success'),
+    # path('api', cart_api_update, name='api'),
 ]

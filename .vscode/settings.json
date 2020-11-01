@@ -1,71 +1,75 @@
 // {
-    {
-        "editor.autoIndent": "full",
-        "editor.cursorBlinking": "solid",
-        "editor.cursorSmoothCaretAnimation": true,
-        "editor.cursorStyle": "line",
-        "editor.fontSize": 15,
-        // "editor.fontFamily": "Dank Mono, Fira Code, Inconsolata",
-        "editor.fontFamily": "Ubuntu Mono, Fira Code,Inconsolata,Consolas,Dank Mono",
-        "editor.fontLigatures": true,
-        "editor.formatOnPaste": true,
-        "editor.formatOnType": false,
-        "editor.formatOnSave": true,
-        "editor.letterSpacing": 0.3,
-        "editor.lineHeight": 30,
-        "editor.minimap.enabled": false,
-        // "editor.multiCursorModifier": "ctrlCmd",
-        "editor.suggestSelection": "first",
-        // "editor.tabCompletion": "on",
-        // "editor.tabSize": 2,
-        "editor.wordWrap": "on",
-        "files.autoSave": "onWindowChange",
-        // "files.autoSaveDelay": 1000,
-        "search.showLineNumbers": true,
-        "terminal.integrated.fontFamily":"Ubuntu Mono, Hack, Consolas",
-        "terminal.integrated.fontSize":14.5,
-// terminal.integrated.fontWeight
-// terminal.integrated.fontWeightBold
-// terminal.integrated.lineHeight
+{
+  "editor.autoIndent": "full",
+  "editor.cursorBlinking": "solid",
+  "editor.cursorSmoothCaretAnimation": true,
+  "editor.cursorStyle": "line",
+  "editor.fontSize": 15,
+  // "editor.fontFamily": "Dank Mono, Fira Code, Inconsolata",
+  // "editor.fontFamily": "Ubuntu Mono, Fira Code,Inconsolata,Consolas,Dank Mono",
+  "editor.fontLigatures": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": false,
+  "editor.formatOnSave": true,
+  "editor.letterSpacing": 0.3,
+  "editor.lineHeight": 30,
+  "editor.minimap.enabled": false,
+  // "editor.multiCursorModifier": "ctrlCmd",
+  "editor.suggestSelection": "first",
+  // "editor.tabCompletion": "on",
+  // "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "files.autoSave": "onWindowChange",
+  // "files.autoSaveDelay": 1000,
+  "search.showLineNumbers": true,
+  "terminal.integrated.fontFamily": "Ubuntu Mono, Hack, Consolas",
+  "terminal.integrated.fontSize": 14.5,
+  // terminal.integrated.fontWeight
+  // terminal.integrated.fontWeightBold
+  // terminal.integrated.lineHeight
 
-        // // "workbench.iconTheme": "material-icon-theme",
-        // "workbench.colorCustomizations": {},
-        "workbench.colorCustomizations": {
-          "statusBar.background": "#1A1A1A",
-          "statusBar.noFolderBackground": "#000000",
-          "statusBar.debuggingBackground": "#000001",
-          "terminal.background": "#000000",
-          
-          // "background": "#000103",
-          
-          
+  // // "workbench.iconTheme": "material-icon-theme",
+  // "workbench.colorCustomizations": {},
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#1A1A1A",
+    "statusBar.noFolderBackground": "#000000",
+    "statusBar.debuggingBackground": "#000001",
+    "terminal.background": "#000000"
 
-        },
-        // // "workbench.colorTheme": "Winter is Coming (Dark Blue)",
-        // "files.autoSave": "on",
-        // "terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
-        "git.autofetch": true,
-        // "editor.suggestSelection": "first",
-        "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-        "tabnine.experimentalAutoImports": true,
-        "python.languageServer": "Microsoft",
-        "guides.enabled": false,
-        "kite.showWelcomeNotificationOnStartup": false,
-        "terminal.integrated.rendererType": "dom",
-        "workbench.colorTheme": "Hyper Term Black",
-        "workbench.iconTheme": "vscode-great-icons",
-        // // "terminal.integrated.fontFamily": "monospace",
-        // "files.associations": {
-        //   // "**/*.html": "html",
-        //   "**/templates/**/*.html": "django-html",
-        //   "**/templates/**/*": "django-txt",
-        //   // "**/requirements{/**,*}.{txt,in}": "pip-requirements"
-        // },
-        "emmet.includeLanguages": {
-          "django-html": "html"
-        },
-        "editor.codeActionsOnSave": {
-          "source.fixAll": true
-        }
-      }
+    // "background": "#000103",
+  },
+  // // "workbench.colorTheme": "Winter is Coming (Dark Blue)",
+  // "files.autoSave": "on",
+  // "terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+  "git.autofetch": true,
+  // "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "tabnine.experimentalAutoImports": true,
+  "python.languageServer": "Microsoft",
+  "guides.enabled": false,
+  "kite.showWelcomeNotificationOnStartup": false,
+  "terminal.integrated.rendererType": "dom",
+  // "workbench.colorTheme": "Hyper Term Black",
+  "workbench.iconTheme": "vscode-great-icons",
+  // // "terminal.integrated.fontFamily": "monospace",
+  // "files.associations": {
+  //   // "**/*.html": "html",
+  //   "**/templates/**/*.html": "django-html",
+  //   "**/templates/**/*": "django-txt",
+  //   // "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+  // },
+  "emmet.includeLanguages": {
+    "django-html": "html"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "cSpell.ignoreWords": ["this"],
+  "files.associations": {
+    //"**/*.html": "html",
+    "**/templates/**/*.html": "django-html",
+    "**/templates/**/*": "django-txt",
+    "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+  }
+}
 // }

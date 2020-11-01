@@ -1,24 +1,85 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <title></title>
     {% include 'base/css.html' %}
-</head>
-<body>
-{% include 'base/navbar.html' with brandName='Happy Shop!' %}
-<div class="container-fluid">
+  </head>
 
+  <body>
+    {% include 'base/navbar.html' with brandName='Happy Shop!' %}
+    <div class="container-fluid">
+      <!-- this block content exchange layout with children -->
+      {% block content %} {% endblock %}
+    </div>
+  </body>
+  {% include 'base/js.html' %}
+  <script>
+    $(document).ready( function () {
+        // alert("nnjjjj");
+        var productForm = $('.form-product-ajax');
+        productForm.submit(function(event) {
+            event.preventDefault();
+            //alert('I wont let you submit');
+            var thisForm = $(this)
+            var dataEndPoint = thisForm.attr("data-endPoint");
+            var httpMethod = thisForm.attr('method');
+            var formData = thisForm.serialize();
+            // Some Ajax Data Here
+            //console.log(actionUrl);
+            $.ajax({
+                url: dataEndPoint,
+                method: httpMethod,
+                data: formData,
+                success: function(data) {
+                    // console.log('success');
+                    // console.log(data);
+                    var submitSpan = thisForm.find('.submit-span');
+                    var navbarCartCount = $('.navbar-cart-count');
+                    if (data.added) submitSpan.html(
+                        '<button type="submit" class="btn btn-link"> Remove </button>'
+                    );
+                    else{
+                      submitSpan.html(
+                          '<button type="submit" class="btn btn-success">Add to Cart</button>'
+                      );
 
-    <!-- this block content exchange layout with children -->
-    {% block content %}
-    {% endblock %}
-</div>
+                    }
+                    navbarCartCount.text(data._count);
+                    if (window.location.href.indexOf('cart')!= -1) refreshCart(data.api);
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+            function  refreshCart(refreshCartUrl){
+                var cartTable = $('.cart-table')
+                var cartBody= cartTable.find('.cart-body');
+                var cart_sub_total= cartBody.find('.cart_sub_total');
+                var cart_total= cartBody.find('.cart_total');
 
-{% include 'base/js.html' %}
-</body>
+                var refreshCartMethod = "GET";
+                $.ajax({
+                    url: refreshCartUrl,
+                    data:{},
+                    method:refreshCartMethod,
+                    success: function(data){
+                        console.log(data);
+                        cart_sub_total.text(data.sub_total);
+                        cart_total.text('Checkout ('+ data.total +')/-');
+                    }, error: function(err){
+                        console.log(err);
+                    }
+                });
+            }
+        });
+    });
+  </script>
 </html>

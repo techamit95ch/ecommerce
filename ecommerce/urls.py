@@ -20,7 +20,7 @@ from django.urls import path, include
 from .views import home_page, contact_page
 from accounts.views import login_Page, registerPage, guest_login_view
 from addresses.views import checkout_address_create_view,checkout_address_use_view
-from cart.views import cart_home
+from cart.views import cart_api_update
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -38,6 +38,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('products/', include('products.urls', namespace="products")),
     path('cart/', include('cart.urls', namespace="cart")),
+    path('cart/api/', cart_api_update, name=''),
     path('search/', include('search.urls', namespace="search")),
 ]
 

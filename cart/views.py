@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from accounts.forms import LoginForm, GuestForm
 from .models import Cart, Product
 from orders.models import Order
@@ -6,6 +7,15 @@ from billing.models import Billing
 from accounts.models import GuestEmail
 from addresses.forms import AddressForm
 from addresses.models import Address
+
+
+def cart_api_update(request):
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    products = [{"name": x.name, "price": x.price}
+                for x in cart_obj.products.all()]
+    cart_data = {'products': products,
+                 "sub_total": cart_obj.sub_total, "total": cart_obj.total}
+    return JsonResponse(cart_data)
 
 
 def cart_home(request):
@@ -17,16 +27,37 @@ def cart_home(request):
 
 def cart_update(request):
     product_id = request.POST.get('product_id')
+    # print(product_id)
     if product_id is not None:
-
-        product_obj = Product.objects.get(id=product_id)
+        try:
+            product_obj = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            print("Error! Product Gone")
+        # print(product_obj)
         # because we have two objects coming back
         cart_obj, new_obj = Cart.objects.new_or_get(request)
+        #
+        cart_obj.products.all()
+        product_added = False
         if product_obj in cart_obj.products.all():
             cart_obj.products.remove(product_obj)
+            product_added = False
+
         else:
             cart_obj.products.add(product_obj)
+            # cart_obj.products.all()
+            product_added = True
+        # print(cart_obj.products.all())
         request.session['cart_items'] = cart_obj.products.count()
+        if request.is_ajax():
+            json_data = {
+                'added': product_added,
+                'removed': not product_added,
+                '_count': cart_obj.products.count(),
+                'api': 'api/'
+            }
+            return JsonResponse(json_data)
+            # print('\noh my fuck! Its ajax')
     return redirect('cart:home')
 
 
@@ -46,7 +77,8 @@ def checkoutHome(request):
     address_qs = None
     if billing_profile is not None:
         if request.user.is_authenticated:
-            address_qs = Address.objects.filter(billing_profile=billing_profile)
+            address_qs = Address.objects.filter(
+                billing_profile=billing_profile)
         #
         # shipping_addres_qs = address_qs.filter(address_type='shipping')
         # billing_addres_qs = address_qs.filter(address_type='billing')

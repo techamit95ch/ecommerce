@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'orders',
     'accounts',
     'billing',
-    'addresses'
+    'addresses',
+    # 'jquery',
+    # 'django_static_jquery'
 
 ]
 
