@@ -56,7 +56,8 @@ def cart_update(request):
                 '_count': cart_obj.products.count(),
                 'api': 'api/'
             }
-            return JsonResponse(json_data)
+            return JsonResponse(json_data , status =200)
+            # return JsonResponse({"message":"Error 400"} , status_code=500)
             # print('\noh my fuck! Its ajax')
     return redirect('cart:home')
 

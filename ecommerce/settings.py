@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'addresses',
+    'django_static_jquery3',
     # 'jquery',
     # 'django_static_jquery'
 

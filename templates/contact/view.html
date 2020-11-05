@@ -9,20 +9,15 @@
 
                 <hr>
                 <div class="col-sm-6 col-sm-12>">
-                    <form method="POST">{% csrf_token %}
+                    <form method="POST" action="{% url 'contact' %}" class="form-horizontal contact-form">
+                      {% csrf_token %}
                         {{ form }}
                         <button type="submit" class="btn btn-primary">Save</button>
 
                 </form>
                 </div>
 
-                <hr>
-                <div class="col-sm-6 col-sm-12>">
-                <form method="POST">{% csrf_token %}
-
-                    <!--input type="text" name ="fullName" class="form-control" placeholder=""-->
-                    </form>
-                </div>
+            
             </div>
         </div>
     </div>
