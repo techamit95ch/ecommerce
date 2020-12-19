@@ -1,0 +1,58 @@
+[
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "title": "Eggs",
+        "description": "dfgfd dfdfhdfh fddfh",
+        "price": "5.00",
+        "image": "products/207994681/207994681.jpeg",
+        "featured": true,
+        "active": true,
+        "slug": "eggs__tss1",
+        "timestamp": "2020-05-30T13:53:45.063Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+        "title": "One Piece Dvd",
+        "description": "rdfgdf rddrfh trgr",
+        "price": "520.00",
+        "image": "products/141006021/141006021.jpeg",
+        "featured": false,
+        "active": true,
+        "slug": "OnePiece",
+        "timestamp": "2020-05-30T13:53:45.063Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+        "title": "Water bottle",
+        "description": "Nice water bottles",
+        "price": "340.00",
+        "image": "products/211409633/211409633.jpeg",
+        "featured": false,
+        "active": true,
+        "slug": "tranceparentBottle1",
+        "timestamp": "2020-05-30T13:53:45.063Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+        "title": "Dell mouse Wireless",
+        "description": "Take your work on-the-go with the reliable wireless connection of the Dell Wireless Mouse-WM126. You can also connect up to six compatible devices with a single receiver, allowing you to wirelessly connect with your keyboards and mice at home, in the office or on the move.",
+        "price": "2799.00",
+        "image": "products/58694330/58694330.jpg",
+        "featured": true,
+        "active": true,
+        "slug": "dell-mouse-wireless",
+        "timestamp": "2020-06-02T16:23:08.880Z"
+    }
+}
+]
